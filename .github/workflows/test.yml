@@ -1,0 +1,35 @@
+name: First CI Pipeline
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  run-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetches full history safely
+
+      - name: Inspect modified files
+        run: |
+          echo "Pipeline is running"
+          
+          echo "--- Files pushed/updated in this commit ---"
+          # Handles initial commit safely: if no HEAD~1 exists, compare against empty tree
+          IF_PARENT=$(git rev-parse --verify HEAD~1 2>/dev/null || echo "4b825dc642cb6eb9a060e54bf8d69288fbee4904")
+          CHANGED_FILES=$(git diff-tree --no-commit-id --name-only -r HEAD $IF_PARENT)
+          echo "$CHANGED_FILES"
+          
+          echo "--- Content of modified files ---"
+          for file in $CHANGED_FILES; do
+            if [ -f "$file" ]; then
+              echo "==> Content of $file <=="
+              cat "$file"
+            fi
+          done
+          
+          echo "adriano first ci"
