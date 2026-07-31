@@ -1,4 +1,4 @@
-echo 'name: First CI Pipeline
+name: First CI Pipeline
 
 on:
   push:
@@ -30,4 +30,4 @@ jobs:
           
           echo "=== Cleanup Container ==="
           docker stop test-container
-          docker rm test-container' > .github/workflows/test.yml
+          docker rm test-container
