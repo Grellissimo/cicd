@@ -61,4 +61,6 @@ jobs:
           push: true
           tags: |
             ghcr.io/grellissimo/my-nginx-app:latest
+            ghcr.io/grellissimo/my-nginx-app:${{ github.sha }}
             grellissimo/my-nginx-app:latest
+            grellissimo/my-nginx-app:${{ github.sha }}
