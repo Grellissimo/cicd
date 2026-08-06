@@ -37,6 +37,20 @@ jobs:
           echo "=== Cleanup Container ==="
           docker stop test-container
           docker rm test-container
+          
+      # --- HELM VERIFICATION ---
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: 'latest'
+
+      - name: Lint and Validate Helm Chart
+        run: |
+          echo "=== Linting Helm Chart ==="
+          helm lint ./chart
+          
+          echo "=== Testing Template Rendering ==="
+          helm template ./chart
 
       # --- LOGINS ---
       - name: Log in to GHCR
